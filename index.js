@@ -23,12 +23,24 @@ var count = new Keen.Query("count", {
     }
 });
 
+var passengerCount = new Keen.Query("count", {
+  eventCollection: "BusOn",
+  groupBy: "stopnum"
+});
+
 client.run(stopCount, function(err, response){
   $('#numStops').html(response.result);
 });
 
 client.run(riderCount, function(err, response){
   $('#numRiders').html(response.result);
+});
+
+//Count number of passengers per bus
+client.run(passengerCount, function(err, response){
+  $('#numPassengers').html(response.result[0].result);
+  $('#busNumber').html(response.result[0].stopnum);
+  $('#numCars').html(Math.floor(response.result[0].result/1.5));
 });
 
 client.draw(count, document.getElementById("chart"), {
@@ -52,4 +64,3 @@ client.draw(count, document.getElementById("chart"), {
 //   $("body").html(response.result);
 //   console.log(response.result); // 100
 // });
-// Jad's first push lol
