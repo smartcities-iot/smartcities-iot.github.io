@@ -53,3 +53,4 @@ client.draw(count, document.getElementById("chart"), {
 //   console.log(response.result); // 100
 // });
 // Jad's first push lol
+// Jad has branched out
