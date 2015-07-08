@@ -52,3 +52,4 @@ client.draw(count, document.getElementById("chart"), {
 //   $("body").html(response.result);
 //   console.log(response.result); // 100
 // });
+// Jad's first push lol
