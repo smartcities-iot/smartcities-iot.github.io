@@ -4,13 +4,23 @@ var client = new Keen({
 });
 
 var stopCount = new Keen.Query("count_unique", {
-  eventCollection: "motion",
+  eventCollection: "BusStop",
   targetProperty: "stopnum"
 });
 
 var riderCount = new Keen.Query("count_unique", {
-  eventCollection: "motion",
+  eventCollection: "BusStop",
+  eventCollection: "BusOn",
+  eventCollection: "BusOff",
   targetProperty: "card"
+});
+
+var checkInCount = new Keen.Query("count_unique", {
+    eventCollection: "BusStop",
+    /*groupBy: "stopnum",*/
+    targetProperty: "card",
+    interval: "minutely",
+    timeframe: "this_5_minutes"
 });
 
 var count = new Keen.Query("count", {
@@ -23,12 +33,29 @@ var count = new Keen.Query("count", {
     }
 });
 
+var riderCountToday = new Keen.Query("count_unique", {
+  eventCollection: "BusOff",
+  targetProperty: "card",
+  interval: "daily",
+  timeframe: "this_day"
+});
+
+
+
 client.run(stopCount, function(err, response){
   $('#numStops').html(response.result);
 });
 
 client.run(riderCount, function(err, response){
   $('#numRiders').html(response.result);
+});
+
+client.run(checkInCount, function(err, response){
+  $('#riderCheckIn').html(response.result[0].value);
+});
+
+client.run(riderCountToday, function(err, response){
+  $('#ridersToday').html(response.result[0].value);
 });
 
 client.draw(count, document.getElementById("chart"), {
