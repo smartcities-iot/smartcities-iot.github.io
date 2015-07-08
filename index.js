@@ -33,7 +33,11 @@ var count = new Keen.Query("count", {
     }
 });
 
-<<<<<<< HEAD
+var passengerCount = new Keen.Query("count", {
+  eventCollection: "BusOn",
+  groupBy: "stopnum"
+});
+
 var riderCountToday = new Keen.Query("count_unique", {
   eventCollection: "BusOff",
   targetProperty: "card",
@@ -41,15 +45,6 @@ var riderCountToday = new Keen.Query("count_unique", {
   timeframe: "this_day"
 });
 
-
-
-=======
-var passengerCount = new Keen.Query("count", {
-  eventCollection: "BusOn",
-  groupBy: "stopnum"
-});
-
->>>>>>> FETCH_HEAD
 client.run(stopCount, function(err, response){
   $('#numStops').html(response.result);
 });
@@ -58,20 +53,17 @@ client.run(riderCount, function(err, response){
   $('#numRiders').html(response.result);
 });
 
-<<<<<<< HEAD
+
+
 client.run(checkInCount, function(err, response){
   $('#riderCheckIn').html(response.result[0].value);
-});
-
-client.run(riderCountToday, function(err, response){
   $('#ridersToday').html(response.result[0].value);
-=======
+});
 //Count number of passengers per bus
 client.run(passengerCount, function(err, response){
   $('#numPassengers').html(response.result[0].result);
   $('#busNumber').html(response.result[0].stopnum);
   $('#numCars').html(Math.floor(response.result[0].result/1.5));
->>>>>>> FETCH_HEAD
 });
 
 client.draw(count, document.getElementById("chart"), {
