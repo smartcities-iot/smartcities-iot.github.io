@@ -1,0 +1,132 @@
+@font-face {
+  font-family: 'Brandon Grotesque';
+  src:
+    local('Brandon Grotesque')
+    url('fonts/Brandon_bld.otf'),
+    format('opentype');
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'Brandon Grotesque';
+  src:
+    local('Brandon Grotesque')
+    url('fonts/Brandon_med.otf'),
+    format('opentype');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Brandon Grotesque';
+  src:
+    local('Brandon Grotesque')
+    url('fonts/Brandon_reg.otf'),
+    format('opentype');
+  font-weight: 400;
+}
+
+body {
+  font-family: 'Brandon Grotesque', Arial, sans-serif;
+}
+
+body.driver-interface {
+  background-color: #729E42;
+}
+
+body.map {
+  padding-top: 100px;
+}
+
+.container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.card-z1 {
+  display: flex;
+  flex-direction: row;
+  background-color: #FFF;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.25);
+  padding: 24px 28px 28px 28px;
+  margin-bottom: 15px;
+}
+
+.stat-number {
+  font-size: 144px;
+  font-weight: 800;
+}
+
+.stat-description {
+  font-family: BrandonGrotesque-Regular;
+  font-size: 64px;
+  color: #9B9B9B;
+}
+
+.route-card {
+  display: flex;
+}
+
+.route-card .route-card-name {
+  font-size: 48px;
+  color: #4A4A4A;
+  letter-spacing: 2px;
+  line-height: 68px;
+  text-transform: uppercase;
+  font-weight: 800;
+  flex: 2 60%;
+}
+
+.route-card .route-card-time {
+  flex: 2;
+  font-size: 48px;
+  color: rgba(74,73,74,0.75);
+  line-height: 68px;
+  text-align: right;
+}
+
+/* Map */
+.navbar-map {
+  width: 100%;
+  background: #516CE1;
+  box-shadow: 0px 5px 7px 0px rgba(0,0,0,0.25);
+  padding: 30px 0;
+  color: #FFF;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Driver interface */
+.driver-stop-container {
+  color: #FFF;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.driver-stop-description {
+  font-size: 48px;
+  line-height: 68px;
+}
+
+.driver-stop-name {
+  font-size: 64px;
+  font-weight: 800;
+  letter-spacing: 2.66px;
+  line-height: 91px;
+  text-transform: uppercase;
+}
+
+.driver-card-stat-number {
+  font-weight: 600;
+  font-size: 108px;
+  color: #4A4A4A;
+  padding-right: 15px;
+}
+
+.driver-card-stat-description {
+  font-size: 64px;
+  color: #9B9B9B;
+}
