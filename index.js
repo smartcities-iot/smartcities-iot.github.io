@@ -53,11 +53,12 @@ client.run(riderCount, function(err, response){
   $('#numRiders').html(response.result);
 });
 
-
+client.run(riderCountToday, function(err, response){
+$('#ridersToday').html(response.result[0].value);
+});
 
 client.run(checkInCount, function(err, response){
   $('#riderCheckIn').html(response.result[0].value);
-  $('#ridersToday').html(response.result[0].value);
 });
 //Count number of passengers per bus
 client.run(passengerCount, function(err, response){
