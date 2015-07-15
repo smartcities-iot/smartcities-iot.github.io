@@ -79,7 +79,7 @@ client.run(passengerCount, function(err, response){
   $('#numCars').html(Math.floor(response.result[0].result/1.5));
 });
 
-//Count number of times the user with card:"\u00026F007F51A8E9" was at a stopnum:1234
+//Count number of times the user with card:"\u00026F007F51A8E9" was at a stopnum:12
 client.run(freqStopCount, function(err, response){
   $('#checkIns').html(response.result[0].result);
   $('#riderID').html(response.result[0].card);
