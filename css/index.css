@@ -1,5 +1,6 @@
 @font-face {
   font-family: 'Brandon Grotesque';
+  src: url('fonts/brandon_bld_webfont.eot');
   src:
     local('Brandon Grotesque')
     url('fonts/Brandon_bld.otf'),
@@ -9,6 +10,7 @@
 
 @font-face {
   font-family: 'Brandon Grotesque';
+  src: url('fonts/brandon_med_webfont.eot');
   src:
     local('Brandon Grotesque')
     url('fonts/Brandon_med.otf'),
@@ -18,6 +20,7 @@
 
 @font-face {
   font-family: 'Brandon Grotesque';
+  src: url('fonts/brandon_reg_webfont.eot');
   src:
     local('Brandon Grotesque')
     url('fonts/Brandon_reg.otf'),
@@ -217,7 +220,6 @@ body.map {
 .driver-stop-container {
   color: #FFF;
   text-align: center;
-  margin-bottom: 100px;
 }
 
 .driver-stop-description {
@@ -227,6 +229,11 @@ body.map {
 
 .stop-requested {
   display: none;
+}
+
+.citrus-banner {
+  max-width: 600px;
+  margin: auto;
 }
 
 .driver-card {
