@@ -5,7 +5,7 @@ var client = new Keen({
 });
 
 var stopCount = new Keen.Query("count_unique", {
-  eventCollection: "motion",
+  eventCollection: "BusStop",
   targetProperty: "stopnum"
 });
 
@@ -15,8 +15,18 @@ var busStopRiderCount = new Keen.Query("count_unique", {
 });
 
 var riderCount = new Keen.Query("count_unique", {
-  eventCollection: "motion",
+  eventCollection: "BusStop",
+  eventCollection: "BusOn",
+  eventCollection: "BusOff",
   targetProperty: "card"
+});
+
+var checkInCount = new Keen.Query("count_unique", {
+    eventCollection: "BusStop",
+    /*groupBy: "stopnum",*/
+    targetProperty: "card",
+    interval: "minutely",
+    timeframe: "this_5_minutes"
 });
 
 var count = new Keen.Query("count", {
@@ -29,9 +39,21 @@ var count = new Keen.Query("count", {
     }
 });
 
+var freqStopCount = new Keen.Quwey("count", {
+    eventCollection: "BusStop",
+    groupby: "card"
+});
+
 var passengerCount = new Keen.Query("count", {
   eventCollection: "BusOn",
   groupBy: "stopnum"
+});
+
+var riderCountToday = new Keen.Query("count_unique", {
+  eventCollection: "BusOff",
+  targetProperty: "card",
+  interval: "daily",
+  timeframe: "this_day"
 });
 
 client.run(stopCount, function(err, response){
@@ -47,6 +69,27 @@ client.run(passengerCount, function(err, response){
   $('#numPassengers').html(response.result[0].result);
   $('#busNumber').html(response.result[0].stopnum);
   $('#numCars').html(Math.floor(response.result[0].result/1.5));
+}
+
+client.run(riderCountToday, function(err, response){
+$('#ridersToday').html(response.result[0].value);
+});
+
+client.run(checkInCount, function(err, response){
+  $('#riderCheckIn').html(response.result[0].value);
+});
+//Count number of passengers per bus
+client.run(passengerCount, function(err, response){
+  $('#numPassengers').html(response.result[0].result);
+  $('#busNumber').html(response.result[0].stopnum);
+  $('#numCars').html(Math.floor(response.result[0].result/1.5));
+});
+
+//Count number of times the user with card:"\u00026F007F51A8E9" was at a stopnum:12
+client.run(freqStopCount, function(err, response){
+  $('#checkIns').html(response.result[0].result);
+  $('#riderID').html(response.result[0].card);
+
 });
 
 // Count number of passengers at bus stop
