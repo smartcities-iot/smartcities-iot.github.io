@@ -34,8 +34,10 @@ var count = new Keen.Query("count", {
 });
 
 var freqStopCount = new Keen.Quwey("count", {
-    eventCollection: "BusStop",
-    groupby: "card"
+  eventCollection: "BusStop",
+  filters: [{"operator":"eq","property_name":"stopnum","property_value":1234}],
+  groupBy: "card",
+  targetProperty: "stopnum"
 });
 
 var passengerCount = new Keen.Query("count", {
