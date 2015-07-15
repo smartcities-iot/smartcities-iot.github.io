@@ -9,6 +9,11 @@ var stopCount = new Keen.Query("count_unique", {
   targetProperty: "stopnum"
 });
 
+var busStopRiderCount = new Keen.Query("count_unique", {
+  eventCollection: "stopRequest",
+  targetProperty: "card"
+});
+
 var riderCount = new Keen.Query("count_unique", {
   eventCollection: "motion",
   targetProperty: "card"
@@ -44,7 +49,29 @@ client.run(passengerCount, function(err, response){
   $('#numCars').html(Math.floor(response.result[0].result/1.5));
 });
 
-// client.draw(count, document.getElementById("chart"), {
+// Count number of passengers at bus stop
+client.run(busStopRiderCount, function(err, response){
+  $('#numRidersAtStop').html(response.result);
+});
+
+// Check if stop '1234' has been requested
+var hasStopBeenRequested = new Keen.Query("select_unique", {
+  eventCollection: "stopRequest",
+  targetProperty: "stopnum",
+  timeframe: "this_14_days",
+  timezone: "UTC"
+});
+
+client.run(hasStopBeenRequested, function(err, response){
+  console.log(response.result);
+  if ($.inArray('1234', response.result) !== -1) {
+    $('.driver-stop-description.upcoming-stop').hide();
+    $('.driver-stop-description.stop-requested').show();
+    $('.driver-interface').addClass('driver-interface-stop-requested');
+  }
+});
+
+// client.dra w(count, document.getElementById("chart"), {
 //   chartType: "areachart",
 //     title: false,
 //     height: 250,
@@ -68,13 +95,12 @@ $('.change-stop-action-button').on('click', function() {
 
 $('.map-card-request-button').on('click', function() {
   var stopRequest = {
-    card: '1',
-    stopnum: '213123',
+    card: '1234',
+    stopnum: '1234',
     keen: {
       timestamp: new Date().toISOString()
     }
   }
-  console.log(stopRequest);
   $('.map-card-request-button').html('Stop requested').attr('disabled', 'disabled');
   // Sends to "stopRequest" collection
   client.addEvent("stopRequest", stopRequest);

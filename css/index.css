@@ -33,6 +33,10 @@ body.driver-interface {
   background-color: #729E42;
 }
 
+body.driver-interface.driver-interface-stop-requested {
+  background-color: #D0021B;
+}
+
 body.map {
   padding-top: 145px;
 }
@@ -221,6 +225,14 @@ body.map {
   line-height: 68px;
 }
 
+.stop-requested {
+  display: none;
+}
+
+.driver-card {
+  padding: auto 30px;
+}
+
 .driver-stop-name {
   font-size: 64px;
   font-weight: 800;
@@ -237,6 +249,8 @@ body.map {
 }
 
 .driver-card-stat-description {
+  padding-left: 10px;
+  padding-top: 30px;
   font-size: 64px;
   color: #9B9B9B;
 }
