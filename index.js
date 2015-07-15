@@ -34,6 +34,31 @@ var passengerCount = new Keen.Query("count", {
   groupBy: "stopnum"
 });
 
+
+//sarah's funcitons
+var riderCountToday = new Keen.Query("count_unique", {
+  eventCollection: "BusOff",
+  targetProperty: "card",
+  interval: "daily",
+  timeframe: "this_day"
+});
+
+var freqStopCount = new Keen.Quwey("count", {
+    eventCollection: "BusStop",
+    groupby: "card"
+});
+
+// counts number of unique users that rode the bus today
+client.run(riderCountToday, function(err, response){
+$('#ridersToday').html(response.result[0].value);
+});
+
+//Count number of times the user with card:"\u00026F007F51A8E9" was at a stopnum:12
+client.run(freqStopCount, function(err, response){
+  $('#checkIns').html(response.result[0].result);
+  $('#riderID').html(response.result[0].card);
+});
+
 client.run(stopCount, function(err, response){
   $('#numStops').html(response.result);
 });
