@@ -34,7 +34,7 @@ body.driver-interface {
 }
 
 body.map {
-  padding-top: 100px;
+  padding-top: 145px;
 }
 
 .container {
@@ -88,6 +88,10 @@ body.map {
 }
 
 /* Map */
+.navbar-container {
+  display: flex;
+}
+
 .navbar-map {
   width: 100%;
   background: #516CE1;
@@ -98,6 +102,112 @@ body.map {
   top: 0;
   left: 0;
 }
+
+.navbar-route-bus-icon {
+    flex: 3 5%;
+}
+
+.navbar-route-name {
+  font-size: 48px;
+  color: #FFFFFF;
+  letter-spacing: 2px;
+  line-height: 68px;
+  text-transform: uppercase;
+  font-weight: 600;
+  flex: 3 30%;
+}
+
+.navbar-route-time {
+  font-size: 48px;
+  color: rgba(255,255,255,0.75);
+  line-height: 68px;b
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.map-card {
+
+}
+
+.map-card-bus-icon {
+  flex: 3 3%;
+}
+
+.map-card-stop-name {
+  flex: 3 60%;
+  font-size: 36px;
+  color: rgba(74,73,74,0.63);
+  line-height: 52px;
+}
+
+.map-card-stop-time {
+  font-size: 24px;
+  color: rgba(74,73,74,0.63);
+  line-height: 34px;
+}
+
+
+.map-card-stop-request {
+
+}
+
+.map-card-request-button {
+  text-transform: uppercase;
+  background: #516CE1;
+  border-radius: 5px;
+  font-size: 24px;
+  color: #FFFFFF;
+  letter-spacing: 2px;
+  line-height: 34px;
+  border: none;
+  font-family: 'Brandon Grotesque', Arial, sans-serif;
+  font-weight: 600;
+  padding: 15px 30px;
+}
+
+.map-card-request-button:disabled {
+  opacity: 0.7;
+}
+
+.change-route-container {
+  z-index: 2;
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  display: none;
+  -webkit-transform: translateY(-0%);
+  -webkit-transition: all 1s ease-in-out;
+}
+
+.change-stop-action {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+}
+
+.change-stop-action-button {
+  border-radius: 60px;
+  height: 120px;
+  width: 120px;
+  border: none;
+  background: #516CE1;
+  box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.50);
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  font-size: 48px;
+  color: #FFFFFF;
+  font-family: 'Brandon Grotesque', Arial, sans-serif;
+}
+
+
 
 /* Driver interface */
 .driver-stop-container {

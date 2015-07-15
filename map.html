@@ -4,18 +4,50 @@
   </head>
 
   <body class="map">
-    <nav class="navbar-map">
+    <div class="map">
+      <div class="map-container">
+        <iframe width="100%" height="100%" frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/view?zoom=11&center=43.4643,-80.5204&key=AIzaSyBljNt785MHaMLBuTymEGth7vMoKIM71DA" allowfullscreen></iframe>
+      </div>
+      <nav class="navbar-map">
+        <div class="container navbar-container">
+          <div class="navbar-route-bus-icon">
+            <img src="img/bus-icon.png" />
+          </div>
+          <div class="navbar-route-name">
+            Route name
+          </div>
+          <div class="navbar-route-time">
+            30 minutes
+          </div>
+        </div>
+      </nav>
+
       <div class="container">
-        <div class="navbar-route-name">
-          Route name
+        <div class="map-card card-z1">
+          <div class="map-card-bus-icon">
+            <img src="img/map-icon.png" />
+          </div>
+          <div class="map-card-stop-name">
+            Stop name
+            <div class="map-card-stop-time">Times</div>
+          </div>
+          <div class="map-card-request">
+            <button class="map-card-request-button">
+              Request Stop
+            </button>
+          </div>
+
+        </div>
+        <div class="change-stop-action">
+          <button class="change-stop-action-button">
+            . . .
+          </button>
         </div>
       </div>
-    </nav>
+    </div>
+    <div class="change-route-container">
 
-    <div class="container">
-      <div class="map-card card-z1">
-        <div class="map-card-stop-name">Stop name</div>
-      </div>
     </div>
   </body>
 
