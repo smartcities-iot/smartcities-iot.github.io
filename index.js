@@ -60,9 +60,12 @@ client.run(passengerCount, function(err, response){
   $('#numCars').html(Math.floor(response.result[0].result/1.5));
 }
 
+client.run(riderCountToday, function(err, response){
+$('#ridersToday').html(response.result[0].value);
+});
+
 client.run(checkInCount, function(err, response){
   $('#riderCheckIn').html(response.result[0].value);
-  $('#ridersToday').html(response.result[0].value);
 });
 //Count number of passengers per bus
 client.run(passengerCount, function(err, response){
