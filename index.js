@@ -39,7 +39,7 @@ var travelTime = new Keen.Query("extraction", {
     eventCollection: "motion",
      filters: [{"operator":"eq","property_name":"stopnum","property_value":8679}],
       timeframe: {"end":"2015-07-09T23:00:00.000+00:00","start":"2015-07-02T22:06:00.000+00:00"}
-});
+}); 
 
 //Declare variables of type Date
 var date = new Date()
@@ -90,7 +90,7 @@ client.run(travelTime, function(err, response){
   //Base Coordinates (UWaterloo): 43.4689° N, 80.5400° W
   $('#distance').html(1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))));
   $('#time').html((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17);
-  
+
   //Parse the time into hours, minutes, and seconds
   $('#hours').html(Math.floor(((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)/3600));
   $('#minutes').html(Math.floor((((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)%3600)/60));
