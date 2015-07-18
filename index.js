@@ -34,6 +34,17 @@ var passengerCount = new Keen.Query("count", {
   groupBy: "stopnum"
 });
 
+//Distance between two points
+var travelTime = new Keen.Query("extraction", {
+    eventCollection: "motion",
+     filters: [{"operator":"eq","property_name":"stopnum","property_value":8679}],
+      timeframe: {"end":"2015-07-09T23:00:00.000+00:00","start":"2015-07-02T22:06:00.000+00:00"}
+});
+
+//Declare variables of type Date
+var date = new Date()
+var currentTime = date.getTime(); //current time in milliseconds since 1970
+
 client.run(stopCount, function(err, response){
   $('#numStops').html(response.result);
 });
@@ -69,6 +80,24 @@ client.run(hasStopBeenRequested, function(err, response){
     $('.driver-stop-description.stop-requested').show();
     $('.driver-interface').addClass('driver-interface-stop-requested');
   }
+});
+
+//Calculate distance, travel time, and arrival time between two points
+client.run(travelTime, function(err, response){
+  $('#latitude').html(response.result[0].latitude);
+  $('#longitude').html(response.result[0].longitude);
+
+  //Base Coordinates (UWaterloo): 43.4689° N, 80.5400° W
+  $('#distance').html(1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))));
+  $('#time').html((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17);
+  
+  //Parse the time into hours, minutes, and seconds
+  $('#hours').html(Math.floor(((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)/3600));
+  $('#minutes').html(Math.floor((((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)%3600)/60));
+  $('#seconds').html(Math.floor((((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)%3600)%60));
+
+  var arrivalTime = new Date(((currentTime)+1000*((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)))
+  $('#arriveTime').html(arrivalTime)
 });
 
 // client.dra w(count, document.getElementById("chart"), {
