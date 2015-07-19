@@ -2,33 +2,33 @@
 
 @font-face {
   font-family: 'Brandon Grotesque';
-  src: url('fonts/brandon_bld_webfont.eot');
-  src:  url('fonts/Brandon_bld.otf') format('opentype'),
-        url('fonts/brandon_bld-webfont.svg') format('svg'),
-        url('fonts/brandon_bld-webfont.woff') format('woff')
-        url('fonts/brandon_bld-webfont.ttf') format('truetype');
+  src: url('../fonts/brandon_bld_webfont.eot');
+  src:  url('../fonts/Brandon_bld.otf') format('opentype'),
+        url('../fonts/brandon_bld-webfont.svg') format('svg'),
+        url('../fonts/brandon_bld-webfont.woff') format('woff'),
+        url('../fonts/brandon_bld-webfont.ttf') format('truetype');
   font-weight: 800;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Brandon Grotesque';
-  src:  url('fonts/brandon_med_webfont.eot');
-  src:  url('fonts/Brandon_med.otf') format('opentype'),
-        url('fonts/brandon_med-webfont.svg') format('svg'),
-        url('fonts/brandon_med-webfont.woff') format('woff')
-        url('fonts/brandon_med-webfont.ttf') format('truetype');
+  src:  url('../fonts/brandon_med_webfont.eot');
+  src:  url('../fonts/Brandon_med.otf') format('opentype'),
+        url('../fonts/brandon_med-webfont.svg') format('svg'),
+        url('../fonts/brandon_med-webfont.woff') format('woff'),
+        url('../fonts/brandon_med-webfont.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Brandon Grotesque';
-  src: url('fonts/brandon_reg_webfont.eot');
-  src:  url('fonts/Brandon_reg.otf') format('opentype'),
-        url('fonts/brandon_reg-webfont.svg') format('svg'),
-        url('fonts/brandon_reg-webfont.woff') format('woff')
-        url('fonts/brandon_reg-webfont.ttf') format('truetype');
+  src: url('../fonts/brandon_reg_webfont.eot');
+  src:  url('../fonts/Brandon_reg.otf') format('opentype'),
+        url('../fonts/brandon_reg-webfont.svg') format('svg'),
+        url('../fonts/brandon_reg-webfont.woff') format('woff'),
+        url('../fonts/brandon_reg-webfont.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
@@ -76,7 +76,7 @@ body.map {
 }
 
 .stat-description {
-  font-family: BrandonGrotesque-Regular;
+  font-family: 'Brandon Grotesque', Arial, sans-serif;
   font-size: 64px;
   color: #9B9B9B;
 }
@@ -138,7 +138,7 @@ body.map {
   letter-spacing: 2px;
   line-height: 68px;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 800;
   flex: 3 30%;
 }
 
@@ -198,7 +198,7 @@ body.map {
   line-height: 34px;
   border: none;
   font-family: 'Brandon Grotesque', Arial, sans-serif;
-  font-weight: 600;
+  font-weight: 800;
   padding: 15px 30px;
 }
 
