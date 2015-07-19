@@ -5,7 +5,7 @@ var client = new Keen({
 });
 
 var stopCount = new Keen.Query("count_unique", {
-  eventCollection: "motion",
+  eventCollection: "BusStop",
   targetProperty: "stopnum"
 });
 
@@ -15,8 +15,18 @@ var busStopRiderCount = new Keen.Query("count_unique", {
 });
 
 var riderCount = new Keen.Query("count_unique", {
-  eventCollection: "motion",
+  eventCollection: "BusStop",
+  eventCollection: "BusOn",
+  eventCollection: "BusOff",
   targetProperty: "card"
+});
+
+var checkInCount = new Keen.Query("count_unique", {
+  eventCollection: "BusStop",
+  /*groupBy: "stopnum", */
+  targetProperty: "card",
+  interval: "minutely",
+  timeframe: "this_5_minutes"
 });
 
 var count = new Keen.Query("count", {
@@ -29,9 +39,21 @@ var count = new Keen.Query("count", {
     }
 });
 
+var freqStopCount = new Keen.Query("count", {
+  eventCollection: "BusStop",
+  groupBy: "card"
+});
+
 var passengerCount = new Keen.Query("count", {
   eventCollection: "BusOn",
   groupBy: "stopnum"
+});
+
+var riderCountToday = new Keen.Query("count_unique", {
+  eventCollection: "BusOff",
+  targetProperty: "card",
+  interval: "daily",
+  timeframe: "this_day"
 });
 
 //Distance between two points
@@ -39,11 +61,32 @@ var travelTime = new Keen.Query("extraction", {
     eventCollection: "motion",
      filters: [{"operator":"eq","property_name":"stopnum","property_value":8679}],
       timeframe: {"end":"2015-07-09T23:00:00.000+00:00","start":"2015-07-02T22:06:00.000+00:00"}
-}); 
+});
 
 //Declare variables of type Date
 var date = new Date()
 var currentTime = date.getTime(); //current time in milliseconds since 1970
+
+client.run(riderCountToday, function(err, response){
+$('#ridersToday').html(response.result[0].value);
+});
+
+client.run(checkInCount, function(err, response){
+  $('#riderCheckIn').html(response.result[0].value);
+});
+//Count number of passengers per bus
+client.run(passengerCount, function(err, response){
+  $('#numPassengers').html(response.result[0].result);
+  $('#busNumber').html(response.result[0].stopnum);
+  $('#numCars').html(Math.floor(response.result[0].result/1.5));
+});
+
+//Count number of times the user with card:"\u00026F007F51A8E9" was at a stopnum:12
+client.run(freqStopCount, function(err, response){
+  $('#checkIns').html(response.result[0].result);
+  $('#riderID').html(response.result[0].card);
+
+});
 
 client.run(stopCount, function(err, response){
   $('#numStops').html(response.result);
@@ -74,7 +117,6 @@ var hasStopBeenRequested = new Keen.Query("select_unique", {
 });
 
 client.run(hasStopBeenRequested, function(err, response){
-  console.log(response.result);
   if ($.inArray('1234', response.result) !== -1) {
     $('.driver-stop-description.upcoming-stop').hide();
     $('.driver-stop-description.stop-requested').show();
@@ -88,49 +130,20 @@ client.run(travelTime, function(err, response){
   $('#longitude').html(response.result[0].longitude);
 
   //Base Coordinates (UWaterloo): 43.4689° N, 80.5400° W
-  $('#distance').html(1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))));
-  $('#time').html((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17);
+  var distance = 1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2)));
 
+  $('#distance').html(distance.toFixed(0));
+  $('#time').html((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17);
   //Parse the time into hours, minutes, and seconds
   $('#hours').html(Math.floor(((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)/3600));
-  $('#minutes').html(Math.floor((((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)%3600)/60));
+
+  var minutes = Math.floor((((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)%3600)/60);
+  $('#minutes').html(minutes);
+  if (minutes === 1) {
+    $('.minutes-plural').hide();
+  }
   $('#seconds').html(Math.floor((((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)%3600)%60));
 
   var arrivalTime = new Date(((currentTime)+1000*((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)))
   $('#arriveTime').html(arrivalTime)
-});
-
-// client.dra w(count, document.getElementById("chart"), {
-//   chartType: "areachart",
-//     title: false,
-//     height: 250,
-//     width: "auto",
-//     chartOptions: {
-//       chartArea: {
-//         height: "75%",
-//         left: "10%",
-//         top: "5%",
-//         width: "60%"
-//       },
-//       isStacked: true
-//     }
-// });
-
-
-// Click events
-$('.change-stop-action-button').on('click', function() {
-  $('.change-route-container').show();
-});
-
-$('.map-card-request-button').on('click', function() {
-  var stopRequest = {
-    card: '1234',
-    stopnum: '1234',
-    keen: {
-      timestamp: new Date().toISOString()
-    }
-  }
-  $('.map-card-request-button').html('Stop requested').attr('disabled', 'disabled');
-  // Sends to "stopRequest" collection
-  client.addEvent("stopRequest", stopRequest);
 });

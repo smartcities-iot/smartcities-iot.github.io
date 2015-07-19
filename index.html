@@ -3,31 +3,42 @@
     <link rel="stylesheet" href="css/index.css" type="text/css" />
   </head>
 
-  <body>
+  <body class="index">
     <div class="container">
       <div class="stat-container">
         <span id="numCars" class="stat-number"></span>
         <span class="stat-description">
-          &nbsp;&nbsp;fewer cars this week.
+          &nbsp;&nbsp;fewer cars on the road this week.
         </span>
       </div>
 
       <div class="route-card card-z1">
         <div class="route-card-name">
-          8 Route Name
+          7 Mainline
+          <div class="route-card-distance">
+            <span id="distance"></span> m
+          </div>
         </div>
         <div class="route-card-time">
-          Due now
+          <span id="minutes"></span> minute<span class="minutes-plural">s</span>
         </div>
+
       </div>
       <div class="route-card card-z1">
         <div class="route-card-name">
-          8 Route Name
+          8 Fairview Park
         </div>
         <div class="route-card-time">
           Due now
         </div>
       </div>
+    </div>
+    <div class="button-tap-card-container">
+      <a href="map.html">
+        <button class="button-tap-card">
+          Tap Card
+        </button>
+      </a>
     </div>
     <div>
       There are <span id="numRiders"></span> riders in the system.
@@ -41,13 +52,14 @@
       This bus has removed <span id="numCars"></span> cars off the road!
     </div>
     <div>
-      
-     <div> 
-      The bus is currently at latitude: <span id="latitude"></span> and longitude: <span id="longitude"></span> <br> 
+
+     <div>
+      The bus is currently at latitude: <span id="latitude"></span> and longitude: <span id="longitude"></span> <br>
       The bus is: <span id="distance"></span> meters away from your current location. <br>
       The bus is scheduled in <span id="hours"></span> hour(s), <span id="minutes"></span> minute(s), and <span id="seconds"></span> second(s) at <span id="arriveTime"></span>
-    </div>  
-
+    </div>
+    There are <span id="riderCheckIn"></span> riders waiting at the next stop. <br>
+    <span id="ridersToday"></span> people have used the bus today. <br>
 
     <div id="chart"></div>
   </body>
