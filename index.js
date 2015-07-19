@@ -103,11 +103,6 @@ client.run(passengerCount, function(err, response){
   $('#numCars').html(Math.floor(response.result[0].result/1.5));
 });
 
-// Count number of passengers at bus stop
-client.run(busStopRiderCount, function(err, response){
-  $('#numRidersAtStop').html(response.result);
-});
-
 // Check if stop '1234' has been requested
 var hasStopBeenRequested = new Keen.Query("select_unique", {
   eventCollection: "stopRequest",
