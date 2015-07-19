@@ -5,7 +5,7 @@ var client = new Keen({
 });
 
 var stopCount = new Keen.Query("count_unique", {
-  eventCollection: "motion",
+  eventCollection: "BusStop",
   targetProperty: "stopnum"
 });
 
@@ -15,8 +15,18 @@ var busStopRiderCount = new Keen.Query("count_unique", {
 });
 
 var riderCount = new Keen.Query("count_unique", {
-  eventCollection: "motion",
+  eventCollection: "BusStop",
+  eventCollection: "BusOn",
+  eventCollection: "BusOff",
   targetProperty: "card"
+});
+
+var checkInCount = new Keen.Query("count_unique", {
+  eventCollection: "BusStop",
+  /*groupBy: "stopnum", */
+  targetProperty: "card",
+  interval: "minutely",
+  timeframe: "this_5_minutes"
 });
 
 var count = new Keen.Query("count", {
@@ -29,9 +39,21 @@ var count = new Keen.Query("count", {
     }
 });
 
+var freqStopCount = new Keen.Query("count", {
+  eventCollection: "BusStop",
+  groupBy: "card"
+});
+
 var passengerCount = new Keen.Query("count", {
   eventCollection: "BusOn",
   groupBy: "stopnum"
+});
+
+var riderCountToday = new Keen.Query("count_unique", {
+  eventCollection: "BusOff",
+  targetProperty: "card",
+  interval: "daily",
+  timeframe: "this_day"
 });
 
 //Distance between two points
@@ -44,6 +66,27 @@ var travelTime = new Keen.Query("extraction", {
 //Declare variables of type Date
 var date = new Date()
 var currentTime = date.getTime(); //current time in milliseconds since 1970
+
+client.run(riderCountToday, function(err, response){
+$('#ridersToday').html(response.result[0].value);
+});
+
+client.run(checkInCount, function(err, response){
+  $('#riderCheckIn').html(response.result[0].value);
+});
+//Count number of passengers per bus
+client.run(passengerCount, function(err, response){
+  $('#numPassengers').html(response.result[0].result);
+  $('#busNumber').html(response.result[0].stopnum);
+  $('#numCars').html(Math.floor(response.result[0].result/1.5));
+});
+
+//Count number of times the user with card:"\u00026F007F51A8E9" was at a stopnum:12
+client.run(freqStopCount, function(err, response){
+  $('#checkIns').html(response.result[0].result);
+  $('#riderID').html(response.result[0].card);
+
+});
 
 client.run(stopCount, function(err, response){
   $('#numStops').html(response.result);
@@ -74,7 +117,6 @@ var hasStopBeenRequested = new Keen.Query("select_unique", {
 });
 
 client.run(hasStopBeenRequested, function(err, response){
-  console.log(response.result);
   if ($.inArray('1234', response.result) !== -1) {
     $('.driver-stop-description.upcoming-stop').hide();
     $('.driver-stop-description.stop-requested').show();
@@ -105,42 +147,3 @@ client.run(travelTime, function(err, response){
   var arrivalTime = new Date(((currentTime)+1000*((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)))
   $('#arriveTime').html(arrivalTime)
 });
-
-// Click events
-$('.change-stop-action-button').on('click', function() {
-  $('.change-route-container').show();
-});
-
-$('.map-card-request-button').on('click', function() {
-  var stopRequest = {
-    card: '1234',
-    stopnum: '1234',
-    keen: {
-      timestamp: new Date().toISOString()
-    }
-  }
-  $('.map-card-request-button').html('Stop requested').attr('disabled', 'disabled');
-  // Sends to "stopRequest" collection
-  client.addEvent("stopRequest", stopRequest);
-});
-
-
-// Map
-
-var map;
-var uWaterlooLocation = [43.468980, -80.5400]
-function initialize() {
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
-    zoom: 12,
-    center: {lat: uWaterlooLocation[0], lng: uWaterlooLocation[1]}
-  });
-
-  // replace marker with latest GPS response location
-  var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      title: 'Bus location'
-  });
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);

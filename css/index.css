@@ -1,3 +1,5 @@
+/*@import url('skeleton.css');*/
+
 @font-face {
   font-family: 'Brandon Grotesque';
   src: url('fonts/brandon_bld_webfont.eot');
@@ -30,6 +32,10 @@
 
 body {
   font-family: 'Brandon Grotesque', Arial, sans-serif;
+}
+
+body.index {
+
 }
 
 body.driver-interface {
@@ -155,6 +161,10 @@ body.map {
 
 .map-card-bus-icon {
   flex: 3 3%;
+
+  @media(max-width: 800px) {
+    width: 100%;
+  }
 }
 
 .map-card-stop-name {
