@@ -3,31 +3,34 @@
 @font-face {
   font-family: 'Brandon Grotesque';
   src: url('fonts/brandon_bld_webfont.eot');
-  src:
-    local('Brandon Grotesque')
-    url('fonts/Brandon_bld.otf'),
-    format('opentype');
+  src:  url('fonts/Brandon_bld.otf') format('opentype'),
+        url('fonts/brandon_bld-webfont.svg') format('svg'),
+        url('fonts/brandon_bld-webfont.woff') format('woff')
+        url('fonts/brandon_bld-webfont.ttf') format('truetype');
   font-weight: 800;
+  font-style: normal;
 }
 
 @font-face {
   font-family: 'Brandon Grotesque';
-  src: url('fonts/brandon_med_webfont.eot');
-  src:
-    local('Brandon Grotesque')
-    url('fonts/Brandon_med.otf'),
-    format('opentype');
+  src:  url('fonts/brandon_med_webfont.eot');
+  src:  url('fonts/Brandon_med.otf') format('opentype'),
+        url('fonts/brandon_med-webfont.svg') format('svg'),
+        url('fonts/brandon_med-webfont.woff') format('woff')
+        url('fonts/brandon_med-webfont.ttf') format('truetype');
   font-weight: 600;
+  font-style: normal;
 }
 
 @font-face {
   font-family: 'Brandon Grotesque';
   src: url('fonts/brandon_reg_webfont.eot');
-  src:
-    local('Brandon Grotesque')
-    url('fonts/Brandon_reg.otf'),
-    format('opentype');
+  src:  url('fonts/Brandon_reg.otf') format('opentype'),
+        url('fonts/brandon_reg-webfont.svg') format('svg'),
+        url('fonts/brandon_reg-webfont.woff') format('woff')
+        url('fonts/brandon_reg-webfont.ttf') format('truetype');
   font-weight: 400;
+  font-style: normal;
 }
 
 body {
