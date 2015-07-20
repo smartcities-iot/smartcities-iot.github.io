@@ -19,7 +19,7 @@ $('.map-card-request-button').on('click', function() {
 // Getting bus' latest location ping
 var busLocationQuery = new Keen.Query("extraction", {
     eventCollection: "GPS",
-    timeframe: "this_1_days"
+    timeframe: "this_2_days"
 });
 
 var busLocation; // default to uWaterloo
