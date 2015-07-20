@@ -78,13 +78,13 @@ client.run(freqStopCount, function(err, response){
 
 });
 
-client.run(stopCount, function(err, response){
-  $('#numStops').html(response.result);
-});
+// client.run(stopCount, function(err, response){
+//   $('#numStops').html(response.result);
+// });
 
-client.run(riderCount, function(err, response){
-  $('#numRiders').html(response.result);
-});
+// client.run(riderCount, function(err, response){
+//   $('#numRiders').html(response.result);
+// });
 
 //Count number of passengers per bus
 client.run(passengerCount, function(err, response){
