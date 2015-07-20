@@ -29,16 +29,6 @@ var checkInCount = new Keen.Query("count_unique", {
   timeframe: "this_5_minutes"
 });
 
-var count = new Keen.Query("count", {
-    eventCollection: "motion",
-    groupBy: "stopnum",
-    interval: "minutely",
-    timeframe: {
-      start: "2015-06-29T00:00:00.000Z",
-      end: "2015-06-30T00:00:00.000Z"
-    }
-});
-
 var freqStopCount = new Keen.Query("count", {
   eventCollection: "BusStop",
   groupBy: "card"
@@ -101,11 +91,6 @@ client.run(passengerCount, function(err, response){
   $('#numPassengers').html(response.result[0].result);
   $('#busNumber').html(response.result[0].stopnum);
   $('#numCars').html(Math.floor(response.result[0].result/1.5));
-});
-
-// Count number of passengers at bus stop
-client.run(busStopRiderCount, function(err, response){
-  $('#numRidersAtStop').html(response.result);
 });
 
 // Check if stop '1234' has been requested

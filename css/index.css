@@ -1,4 +1,4 @@
-/*@import url('skeleton.css');*/
+@import url('skeleton.css');
 
 @font-face {
   font-family: 'Brandon Grotesque';
@@ -82,7 +82,7 @@ body.map {
 }
 
 .route-card {
-  display: flex;
+  display: block;
 }
 
 .route-card .route-card-name {
@@ -92,7 +92,6 @@ body.map {
   line-height: 68px;
   text-transform: uppercase;
   font-weight: 800;
-  flex: 2 60%;
 }
 
 .route-card-distance {
@@ -104,17 +103,33 @@ body.map {
   letter-spacing: normal;
 }
 
-.route-card .route-card-time {
-  flex: 2;
+.route-card-time {
   font-size: 48px;
   color: rgba(74,73,74,0.75);
   line-height: 68px;
   text-align: right;
 }
 
+@media(max-width: 550px) {
+  .route-card-time {
+    text-align: left;
+  }
+
+  body.map {
+    padding-top: 250px;
+  }
+
+  .map-card-stop-time {
+    margin-bottom: 15px;
+  }
+
+  .map {
+    padding-top
+  }
+}
+
 /* Map */
 .navbar-container {
-  display: flex;
 }
 
 .navbar-map {
@@ -129,7 +144,6 @@ body.map {
 }
 
 .navbar-route-bus-icon {
-    flex: 3 5%;
 }
 
 .navbar-route-name {
@@ -139,7 +153,6 @@ body.map {
   line-height: 68px;
   text-transform: uppercase;
   font-weight: 800;
-  flex: 3 30%;
 }
 
 .navbar-route-time {
@@ -159,15 +172,10 @@ body.map {
 .map-card {
   z-index: 1;
   position: relative;
-
+  display: block;
 }
 
 .map-card-bus-icon {
-  flex: 3 3%;
-
-  @media(max-width: 800px) {
-    width: 100%;
-  }
 }
 
 .map-card-stop-name {
@@ -189,6 +197,7 @@ body.map {
 }
 
 .map-card-request-button {
+  text-align: right;
   text-transform: uppercase;
   background: #516CE1;
   border-radius: 5px;
@@ -251,7 +260,7 @@ body.map {
   line-height: 34px;
   border: none;
   font-family: 'Brandon Grotesque', Arial, sans-serif;
-  font-weight: 600;
+  font-weight: 800;
   padding: 15px 30px;
   margin-top: 30px;
 
