@@ -6,10 +6,19 @@
   <body class="index">
     <div class="container">
       <div class="stat-container">
-        <span id="numCars" class="stat-number"></span>
-        <span class="stat-description">
-          &nbsp;&nbsp;fewer cars on the road this week.
-        </span>
+        <div class="stat-num-cars">
+          <span id="numCars" class="stat-number"></span>
+          <span class="stat-description">
+            &nbsp;&nbsp;fewer cars on the road this week.
+          </span>
+        </div>
+        <div class="stat-num-riders">
+          <span id="ridersToday" class="stat-number"></span>
+          <span class="stat-description">
+            &nbsp;&nbsp;people have used the bus today.
+          </span>
+        </div>
+
       </div>
 
       <div class="route-card card-z1 row">
@@ -60,8 +69,6 @@
       <!-- The bus is: <span id="distance"></span> meters away from your current location. <br> -->
       <!-- The bus is scheduled in <span id="hours"></span> hour(s), <span id="minutes"></span> minute(s), and <span id="seconds"></span> second(s) at <span id="arriveTime"></span> -->
     </div>
-    <span id="ridersToday"></span> people have used the bus today. <br>
-
     <div id="chart"></div>
   </body>
 
