@@ -16,21 +16,48 @@ $('.map-card-request-button').on('click', function() {
   client.addEvent("stopRequest", stopRequest);
 });
 
+// Getting bus' latest location ping
+var busLocationQuery = new Keen.Query("extraction", {
+    eventCollection: "GPS",
+    timeframe: "this_1_days"
+});
+
+var busLocation; // default to uWaterloo
+
+client.run(busLocationQuery, function(err, response) {
+  var latestLocation = response.result[0];
+  function initialize() {
+    var busLocation = [Number(latestLocation.latitude), Number((-1)*latestLocation.longitude)];
+    map = new google.maps.Map(document.getElementById('map-canvas'), {
+      zoom: 16,
+      center: {lat: busLocation[0], lng: busLocation[1]}
+    });
+
+    var marker = new google.maps.Marker({
+        position: {lat: busLocation[0], lng: busLocation[1]},
+        map: map,
+        title: 'Bus location'
+    });
+  var busCoordinates = [];
+  for (i = 0; i < 705; i ++) {
+    var locationMarker = response.result[i];
+    var busLocation = [Number(locationMarker.latitude), Number((-1)*locationMarker.longitude)];
+    busCoordinates[i] = new google.maps.LatLng(busLocation[0], busLocation[1]);
+
+  }
+  var busPath = new google.maps.Polyline({
+    path: busCoordinates,
+    geodesic: true,
+    strokeColor: '#000000',
+    strokeOpacity: 1.0,
+    strokeWeight: 5,
+  });
+  busPath.setMap(map);
+
+  }
+
+  var map;
+  initialize();
+});
+
 // Google Maps map
-var map;
-var uWaterlooLocation = [43.468980, -80.5400]
-function initialize() {
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
-    zoom: 12,
-    center: {lat: uWaterlooLocation[0], lng: uWaterlooLocation[1]}
-  });
-
-  // TODO: replace marker with latest GPS response location
-  var marker = new google.maps.Marker({
-      position: {lat: uWaterlooLocation[0], lng: uWaterlooLocation[1]},
-      map: map,
-      title: 'Bus location'
-  });
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);

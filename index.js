@@ -29,16 +29,6 @@ var checkInCount = new Keen.Query("count_unique", {
   timeframe: "this_5_minutes"
 });
 
-var count = new Keen.Query("count", {
-    eventCollection: "motion",
-    groupBy: "stopnum",
-    interval: "minutely",
-    timeframe: {
-      start: "2015-06-29T00:00:00.000Z",
-      end: "2015-06-30T00:00:00.000Z"
-    }
-});
-
 var freqStopCount = new Keen.Query("count", {
   eventCollection: "BusStop",
   groupBy: "card"
