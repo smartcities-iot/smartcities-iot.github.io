@@ -132,3 +132,11 @@ client.run(travelTime, function(err, response){
   var arrivalTime = new Date(((currentTime)+1000*((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)))
   $('#arriveTime').html(arrivalTime)
 });
+
+if (Math.floor((Math.random() * 2) + 1) === 2) {
+  $('.stat-num-cars').hide();
+  $('.stat-num-riders').show();
+} else {
+  $('.stat-num-cars').show();
+  $('.stat-num-riders').hide();
+}
