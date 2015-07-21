@@ -61,4 +61,17 @@ client.run(busLocationQuery, function(err, response) {
   initialize();
 });
 
-// Google Maps map
+var freqStopCount = new Keen.Query("count", {
+  eventCollection: "BusStop",
+  groupBy: "card"
+});
+
+//Count number of times the user with card:"\u00026F007F51A8E9" was at a stopnum:12
+client.run(freqStopCount, function(err, response){
+  var numCheckIns = response.result[0].result;
+  $('#checkIns').html(numCheckIns);
+  if (numCheckIns === 1) {
+    $('.times-plural').hide();
+  }
+  $('#riderID').html(response.result[0].card);
+});

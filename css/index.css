@@ -38,7 +38,7 @@ body {
 }
 
 body.index {
-
+  background: url('../img/background.png');
 }
 
 body.driver-interface {
@@ -156,7 +156,7 @@ body.map {
 }
 
 .navbar-route-time {
-  font-size: 48px;
+  font-size: 24px;
   color: rgba(255,255,255,0.75);
   line-height: 68px;b
 }
