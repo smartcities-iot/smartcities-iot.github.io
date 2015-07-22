@@ -20,6 +20,7 @@ $('.map-card-request-button').on('click', function() {
 var busLocationQuery = new Keen.Query("extraction", {
     eventCollection: "GPS",
     timeframe: "this_3_days",
+    filters: [{"operator":"ne","property_name":"latitude","property_value":"0.0000000"}],
     latest: 700
 });
 
@@ -44,7 +45,7 @@ client.run(freqStopCount, function(err, response){
 var busLocation; // default to uWaterloo
 
 client.run(busLocationQuery, function(err, response) {
-  var latestLocation = response.result[0];
+  var latestLocation = response.result[1];
   function initialize() {
     var busLocation = [Number(latestLocation.latitude), Number((-1)*latestLocation.longitude)];
     map = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -97,7 +98,7 @@ client.run(busLocationQuery, function(err, response) {
   });
 
   var busCoordinates = [];
-  for (i = 0; i < 700; i ++) {
+  for (i = 0; i < 600; i ++) {
     var locationMarker = response.result[i];
     var busLocation = [Number(locationMarker.latitude), Number((-1)*locationMarker.longitude)];
     busCoordinates[i] = new google.maps.LatLng(busLocation[0], busLocation[1]);
