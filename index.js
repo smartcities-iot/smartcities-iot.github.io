@@ -10,7 +10,7 @@ var stopCount = new Keen.Query("count_unique", {
 });
 
 var busStopRiderCount = new Keen.Query("count_unique", {
-  eventCollection: "stopRequest",
+  eventCollection: "BusStop",
   targetProperty: "card"
 });
 
@@ -78,22 +78,6 @@ client.run(passengerCount, function(err, response){
   $('#numCars').html(Math.floor(response.result[0].result/1.5));
 });
 
-// Check if stop '1234' has been requested
-var hasStopBeenRequested = new Keen.Query("select_unique", {
-  eventCollection: "stopRequest",
-  targetProperty: "stopnum",
-  timeframe: "this_14_days",
-  timezone: "UTC"
-});
-
-client.run(hasStopBeenRequested, function(err, response){
-  if ($.inArray('1234', response.result) !== -1) {
-    $('.driver-stop-description.upcoming-stop').hide();
-    $('.driver-stop-description.stop-requested').show();
-    $('.driver-interface').addClass('driver-interface-stop-requested');
-  }
-});
-
 client.run(checkInCount, function(err, response){
   $('#riderCheckIn').html(response.result[0].value);
 
@@ -124,6 +108,7 @@ client.run(checkInCount, function(err, response){
       //Parse the time into minutes and seconds
       var minutes = Math.floor((time%3600)/60);
       $('#minutes').html(minutes);
+      $('#toStopMinutes').html(minutes+2);
       if (minutes === 1) {
         $('.minutes-plural').hide();
       }

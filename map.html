@@ -13,10 +13,10 @@
             <div class="navbar-route-bus-icon one column">
               <img src="img/bus-icon.png" style="padding-top: 10px"/>
             </div>
-            <div class="navbar-route-name eight columns">
+            <div class="navbar-route-name seven columns">
               7 Mainline
             </div>
-            <div class="navbar-route-time three columns">
+            <div class="navbar-route-time four columns">
               <span id="minutes"></span> minute<span class="minutes-plural">s</span>,&nbsp;
               <span id="distance"></span> m
             </div>
@@ -31,9 +31,10 @@
               <img src="img/map-icon.png" />
             </div>
             <div class="map-card-stop-name seven columns">
+              <div class="map-card-stop-sub">Most frequent destination (<span id="checkIns"></span> time<span class="times-plural">s</span>):</div>
               Engineering 5 at uWaterloo
               <div class="map-card-stop-time">
-                You've been here <span id="checkIns"></span> time<span class="times-plural">s</span>
+                <div>Time to destination: <span id="toStopMinutes"></span> minutes</div>
               </div>
             </div>
             <div class="map-card-request four columns">

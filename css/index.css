@@ -173,6 +173,7 @@ body.map {
   z-index: 1;
   position: relative;
   display: block;
+  line-height: 1.2;
 }
 
 .map-card-bus-icon {
@@ -182,11 +183,10 @@ body.map {
   flex: 3 60%;
   font-size: 36px;
   color: rgba(74,73,74,0.63);
-  line-height: 52px;
 }
 
 .map-card-stop-time {
-  font-size: 24px;
+  font-size: 18px;
   color: rgba(74,73,74,0.63);
   line-height: 34px;
 }
@@ -209,6 +209,11 @@ body.map {
   font-family: 'Brandon Grotesque', Arial, sans-serif;
   font-weight: 800;
   padding: 15px 30px;
+}
+
+.map-card-stop-sub {
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
 .map-card-request-button:disabled {
