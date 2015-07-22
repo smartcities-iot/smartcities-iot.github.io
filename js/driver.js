@@ -9,17 +9,17 @@ var funnelPeople = new Keen.Query("funnel", {
     {
      "event_collection": "BusStop",
      "actor_property": "card",
-     "timeframe": "this_2_hours"
+     "timeframe": "this_10_minutes"
     },
     {
      "event_collection": "BusOn",
      "actor_property": "card",
-     "timeframe": "this_2_hours"
+     "timeframe": "this_10_minutes"
     },
     {
      "event_collection": "BusOff",
      "actor_property": "card",
-     "timeframe": "this_2_hours"
+     "timeframe": "this_10_minutes"
     }
   ]
 });
