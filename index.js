@@ -45,7 +45,7 @@ var riderCountToday = new Keen.Query("count_unique", {
 var travelTime = new Keen.Query("extraction", {
     eventCollection: "GPS",
     filters: [{"operator":"ne","property_name":"latitude","property_value":"0.0000000"}],
-    timeframe: "this_3_days",
+    timeframe: "this_1_months",
     latest: 10
 });
 
@@ -94,8 +94,8 @@ client.run(checkInCount, function(err, response){
       $('#latitude').html(response.result[0].latitude);
       $('#longitude').html(response.result[0].longitude);
 
-      // Calculates distance between data point and base coordinates (43.4731° N, 80.5400° W) (E5 Computer lab)
-      var distance = 1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4731),2)));
+      // Calculates distance between data point and base coordinates (43.4727° N, 80.5423° W) (DC Fishbowl)
+      var distance = 1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)-43.4727),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-80.5423),2)));
       // Assumes an average bus speed of 15 km/hour
       if ((busStopCount === 0) && (busCheckinCount === 0)) {
         var time = (distance/4.17);
