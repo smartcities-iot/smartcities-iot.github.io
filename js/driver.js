@@ -9,17 +9,17 @@ var funnelPeople = new Keen.Query("funnel", {
     {
      "event_collection": "BusStop",
      "actor_property": "card",
-     "timeframe": "this_1_days"
+     "timeframe": "this_2_hours"
     },
     {
      "event_collection": "BusOn",
      "actor_property": "card",
-     "timeframe": "this_1_days"
+     "timeframe": "this_2_hours"
     },
     {
      "event_collection": "BusOff",
      "actor_property": "card",
-     "timeframe": "this_1_days"
+     "timeframe": "this_2_hours"
     }
   ]
 });
@@ -42,12 +42,15 @@ client.run(hasStopBeenRequested, function(err, response){
 
 
 client.run(funnelPeople, function(err, response){
+  console.log(response.result);
   // if (err) handle the error
   var peopleAtStop = Number(response.result[0]);
   var peopleOnBus = Number(response.result[1]);
   var peopleOffBus = Number(response.result[2]);
 
+  console.log(peopleAtStop);
   console.log(peopleOnBus);
+  console.log(peopleOffBus);
 
   var numPeopleOnBoard = (peopleOnBus-peopleOffBus);
   $('#numOnBoard').html(numPeopleOnBoard);
