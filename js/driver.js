@@ -52,7 +52,8 @@ client.run(funnelPeople, function(err, response){
   console.log(peopleOnBus);
   console.log(peopleOffBus);
 
-  var numPeopleOnBoard = (peopleOnBus-peopleOffBus);
+  var numPeopleOnBoard =(peopleOnBus)-(peopleOffBus);
+   console.log(numPeopleOnBoard);
   $('#numOnBoard').html(numPeopleOnBoard);
-  $('#numRidersAtStop').html(peopleAtStop);
+  $('#numRidersAtStop').html(peopleAtStop-peopleOnBus);
 });
