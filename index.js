@@ -56,9 +56,6 @@ client.run(riderCountToday, function(err, response){
 $('#ridersToday').html(response.result[0].value);
 });
 
-client.run(checkInCount, function(err, response){
-  $('#riderCheckIn').html(response.result[0].value);
-});
 //Count number of passengers per bus
 client.run(passengerCount, function(err, response){
   $('#numPassengers').html(response.result[0].result);
@@ -97,28 +94,51 @@ client.run(hasStopBeenRequested, function(err, response){
   }
 });
 
-//Calculate distance, travel time, and arrival time between two points
-client.run(travelTime, function(err, response){
-  $('#latitude').html(response.result[0].latitude);
-  $('#longitude').html(response.result[0].longitude);
+client.run(checkInCount, function(err, response){
+  $('#riderCheckIn').html(response.result[0].value);
 
-  //Base Coordinates (UWaterloo): 43.4689° N, 80.5400° W
-  var distance = 1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2)));
+  // Declares the number of people getting on at the next bus stop as busCheckInCount
+  var busCheckInCount = response.result[0].value;
 
-  $('#distance').html(distance.toFixed(0));
-  $('#time').html((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17);
-  //Parse the time into hours, minutes, and seconds
-  $('#hours').html(Math.floor(((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)/3600));
+  client.run(busStopRiderCount, function(err, response){
+      // Declares the number of people getting off the bus as busStopCount
+      var busStopCount = response.result;
 
-  var minutes = Math.floor((((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)%3600)/60);
-  $('#minutes').html(minutes);
-  if (minutes === 1) {
-    $('.minutes-plural').hide();
-  }
-  $('#seconds').html(Math.floor((((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)%3600)%60));
+    //Calculate distance, travel time, and arrival time between two points
+    client.run(travelTime, function(err, response){
+      $('#latitude').html(response.result[0].latitude);
+      $('#longitude').html(response.result[0].longitude);
 
-  var arrivalTime = new Date(((currentTime)+1000*((1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4689),2))))/4.17)))
-  $('#arriveTime').html(arrivalTime)
+      // Calculates distance between data point and base coordinates (43.4731° N, 80.5400° W) (E5 Computer lab)
+      var distance = 1000*Math.sqrt((Math.pow(110.57*(Number(response.result[0].latitude)+80.5400),2))+(Math.pow(111.32*(Number(response.result[0].longitude)-43.4731),2)));
+      // Assumes an average bus speed of 15 km/hour
+      if ((busStopCount === 0) && (busCheckinCount === 0)) {
+        var time = (distance/4.17);
+      // Adds 5+1n seconds for every n offboarding passenger and n onboarding passenger
+      } else {
+        var time = ((distance/4.17)+5+busStopCount+busCheckInCount);
+      }
+
+      $('#distance').html(distance.toFixed(0));
+      
+      //Parse the time into minutes and seconds
+      var minutes = Math.floor((time%3600)/60);
+      $('#minutes').html(minutes);
+      if (minutes === 1) {
+        $('.minutes-plural').hide();
+      }
+
+      var seconds = Math.floor((time%3600)%60)
+      $('#seconds').html(seconds);
+      if (seconds === 1) {
+        $('.seconds-plural').hide();
+      }
+
+      // Determines the arrival time of the bus
+      var arrivalTime = new Date(currentTime+1000*time)
+      $('#arriveTime').html(arrivalTime)
+    });
+  });
 });
 
 if (Math.floor((Math.random() * 2) + 1) === 2) {
