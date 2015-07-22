@@ -45,7 +45,7 @@ var riderCountToday = new Keen.Query("count_unique", {
 var travelTime = new Keen.Query("extraction", {
     eventCollection: "GPS",
     filters: [{"operator":"ne","property_name":"latitude","property_value":"0.0000000"}],
-    timeframe: "this_3_days",
+    timeframe: "this_4_days",
     latest: 10
 });
 

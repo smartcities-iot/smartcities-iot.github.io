@@ -19,7 +19,7 @@ $('.map-card-request-button').on('click', function() {
 // Getting bus' latest location ping
 var busLocationQuery = new Keen.Query("extraction", {
     eventCollection: "GPS",
-    timeframe: "this_3_days",
+    timeframe: "this_4_days",
     filters: [{"operator":"ne","property_name":"latitude","property_value":"0.0000000"}],
     latest: 700
 });
