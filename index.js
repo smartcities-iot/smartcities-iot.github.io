@@ -43,9 +43,9 @@ var riderCountToday = new Keen.Query("count_unique", {
 
 //Distance between two points
 var travelTime = new Keen.Query("extraction", {
-    eventCollection: "motion",
-     filters: [{"operator":"eq","property_name":"stopnum","property_value":8679}],
-      timeframe: {"end":"2015-07-09T23:00:00.000+00:00","start":"2015-07-02T22:06:00.000+00:00"}
+    eventCollection: "GPS",
+    timeframe: "this_3_days",
+    latest: 10
 });
 
 //Declare variables of type Date
@@ -120,7 +120,7 @@ client.run(checkInCount, function(err, response){
       }
 
       $('#distance').html(distance.toFixed(0));
-      
+
       //Parse the time into minutes and seconds
       var minutes = Math.floor((time%3600)/60);
       $('#minutes').html(minutes);
