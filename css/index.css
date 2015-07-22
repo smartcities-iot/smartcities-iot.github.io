@@ -78,7 +78,7 @@ body.map {
 .stat-description {
   font-family: 'Brandon Grotesque', Arial, sans-serif;
   font-size: 64px;
-  color: #9B9B9B;
+  color: #333;
 }
 
 .route-card {
@@ -283,7 +283,7 @@ body.map {
 }
 
 .citrus-banner {
-  max-width: 600px;
+  max-width: 400px;
   margin: auto;
 }
 
@@ -304,11 +304,12 @@ body.map {
   font-size: 108px;
   color: #4A4A4A;
   padding-right: 15px;
+  line-height: 1.2;
 }
 
 .driver-card-stat-description {
   padding-left: 10px;
-  padding-top: 30px;
+  padding-top: 20px;
   font-size: 64px;
   color: #9B9B9B;
 }

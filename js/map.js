@@ -19,9 +19,27 @@ $('.map-card-request-button').on('click', function() {
 // Getting bus' latest location ping
 var busLocationQuery = new Keen.Query("extraction", {
     eventCollection: "GPS",
-    timeframe: "this_2_days",
+    timeframe: "this_3_days",
     latest: 700
 });
+
+//Count number of times the user with card:"\u00026F007F51A8E9" was at a stopnum:12
+var freqStopCount = new Keen.Query("count", {
+  eventCollection: "BusStop",
+  groupBy: "card"
+});
+
+
+client.run(freqStopCount, function(err, response){
+  var numCheckIns = response.result[0].result;
+  $('#checkIns').html(numCheckIns);
+  if (numCheckIns === 1) {
+    $('.times-plural').hide();
+  }
+  // $('#riderID').html(response.result[0].card);
+});
+
+
 
 var busLocation; // default to uWaterloo
 
@@ -31,14 +49,53 @@ client.run(busLocationQuery, function(err, response) {
     var busLocation = [Number(latestLocation.latitude), Number((-1)*latestLocation.longitude)];
     map = new google.maps.Map(document.getElementById('map-canvas'), {
       zoom: 16,
-      center: {lat: busLocation[0], lng: busLocation[1]}
+      center: {lat: 43.4726725, lng: -80.542215617}
     });
 
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = new google.maps.LatLng(position.coords.latitude,
+                                         position.coords.longitude);
+
+        var infowindow = new google.maps.InfoWindow({
+          map: map,
+          position: pos,
+          content: 'Location found using HTML5.'
+        });
+
+        var marker = new google.maps.Marker({
+          position: pos,
+          map: map,
+          title: 'Current location'
+        });
+
+        map.setCenter(pos);
+      }, function() {
+        handleNoGeolocation(true);
+      });
+  } else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
+  function handleNoGeolocation(errorFlag) {
     var marker = new google.maps.Marker({
-        position: {lat: busLocation[0], lng: busLocation[1]},
-        map: map,
-        title: 'Bus location'
+      position: {lat: 43.4726725, lng: -80.542215617},
+      map: map,
+      title: 'Current location'
     });
+    if (errorFlag) {
+      var content = 'Error: The Geolocation service failed.';
+    } else {
+      var content = 'Error: Your browser doesn\'t support geolocation.';
+    }
+  }
+
+  var marker = new google.maps.Marker({
+      position: {lat: busLocation[0], lng: busLocation[1]},
+      map: map,
+      title: 'Bus location'
+  });
+
   var busCoordinates = [];
   for (i = 0; i < 700; i ++) {
     var locationMarker = response.result[i];
@@ -59,19 +116,4 @@ client.run(busLocationQuery, function(err, response) {
 
   var map;
   initialize();
-});
-
-var freqStopCount = new Keen.Query("count", {
-  eventCollection: "BusStop",
-  groupBy: "card"
-});
-
-//Count number of times the user with card:"\u00026F007F51A8E9" was at a stopnum:12
-client.run(freqStopCount, function(err, response){
-  var numCheckIns = response.result[0].result;
-  $('#checkIns').html(numCheckIns);
-  if (numCheckIns === 1) {
-    $('.times-plural').hide();
-  }
-  $('#riderID').html(response.result[0].card);
 });

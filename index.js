@@ -29,11 +29,6 @@ var checkInCount = new Keen.Query("count_unique", {
   timeframe: "this_5_minutes"
 });
 
-var freqStopCount = new Keen.Query("count", {
-  eventCollection: "BusStop",
-  groupBy: "card"
-});
-
 var passengerCount = new Keen.Query("count", {
   eventCollection: "BusOn",
   groupBy: "stopnum"
@@ -69,13 +64,6 @@ client.run(passengerCount, function(err, response){
   $('#numPassengers').html(response.result[0].result);
   $('#busNumber').html(response.result[0].stopnum);
   $('#numCars').html(Math.floor(response.result[0].result/1.5));
-});
-
-//Count number of times the user with card:"\u00026F007F51A8E9" was at a stopnum:12
-client.run(freqStopCount, function(err, response){
-  $('#checkIns').html(response.result[0].result);
-  $('#riderID').html(response.result[0].card);
-
 });
 
 // client.run(stopCount, function(err, response){
